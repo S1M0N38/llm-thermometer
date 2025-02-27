@@ -4,7 +4,7 @@ version = "0.0.0"
 description = "Extimate temperature values of LLMs from generated text"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = []
+dependencies = ["openai>=1.64.0", "pydantic>=2.10.6", "tqdm>=4.67.1"]
 
 [tool.ruff.lint]
 extend-select = ["I"]
