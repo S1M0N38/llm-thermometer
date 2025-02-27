@@ -135,7 +135,7 @@ wheels = [
 [[package]]
 name = "llm-thermometer"
 version = "0.0.0"
-source = { virtual = "." }
+source = { editable = "." }
 dependencies = [
     { name = "openai" },
     { name = "pydantic" },
