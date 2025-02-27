@@ -1,10 +1,17 @@
 [project]
-name = "llm-thermometer"
+name = "llm_thermometer"
 version = "0.0.0"
 description = "Extimate temperature values of LLMs from generated text"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = ["openai>=1.64.0", "pydantic>=2.10.6", "tqdm>=4.67.1"]
+
+[project.scripts]
+llm-thermometer = "llm_thermometer.cli:main"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
 
 [tool.ruff.lint]
 extend-select = ["I"]
