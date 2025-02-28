@@ -11,6 +11,7 @@ from tqdm import tqdm
 
 from llm_thermometer.models import Sample
 
+MAX_TOKENS = 500  # NOTE: this limitation is imposed by the embedding model
 CONCURRENT_REQUESTS = 32  # NOTE: larger values could cause stalling issues
 
 logging.basicConfig(
@@ -31,6 +32,7 @@ async def generate_sample(
         model=model,
         messages=[{"role": "user", "content": prompt}],
         temperature=temperature,
+        max_tokens=MAX_TOKENS,
     )
 
     completion = response.choices[0].message.content
