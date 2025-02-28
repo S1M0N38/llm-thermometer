@@ -22,8 +22,7 @@ class Embedding(BaseModel):
 class Similarity(BaseModel):
     """Model for pairwise similarity between samples."""
 
-    id: str
     model: str
-    sample_id1: int
-    sample_id2: int
+    sample_id1: str
+    sample_id2: str
     similarity: float
