@@ -7,8 +7,9 @@ from argparse import Namespace
 from pathlib import Path
 
 from openai import AsyncOpenAI
-from pydantic import BaseModel
 from tqdm import tqdm
+
+from llm_thermometer.models import Sample
 
 CONCURRENT_REQUESTS = 32  # NOTE: larger values could cause stalling issues
 
@@ -18,13 +19,6 @@ logging.basicConfig(
 
 assert (LLM_API_KEY := os.getenv("LLM_API_KEY", ""))
 assert (LLM_BASE_URL := os.getenv("LLM_BASE_URL", ""))
-
-
-class Sample(BaseModel):
-    model: str
-    prompt: str
-    completion: str
-    temperature: float | None = None
 
 
 async def generate_sample(
@@ -43,6 +37,7 @@ async def generate_sample(
     assert completion
 
     return Sample(
+        id=response.id,
         model=model,
         prompt=prompt,
         completion=completion,
