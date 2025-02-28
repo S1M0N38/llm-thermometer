@@ -67,9 +67,8 @@ async def generate_sample_and_save(
 
 async def generate_samples_and_save(args: Namespace):
     assert len(args.prompt) > 0, "Prompt cannot be empty"
-    assert not args.output_file.exists(), "Output file must not exist"
-    assert args.output_file.suffix == ".jsonl", "Output file must be a JSONL file"
     assert args.samples > 0, "Samples must be greater than 0"
+    assert 0 <= args.temperature <= 1, "0 <= temperature <= 1"
 
     semaphore = asyncio.Semaphore(CONCURRENT_REQUESTS)
     client = AsyncOpenAI(api_key=LLM_API_KEY, base_url=LLM_BASE_URL)
@@ -78,7 +77,7 @@ async def generate_samples_and_save(args: Namespace):
         async with semaphore:
             return await generate_sample_and_save(
                 client=client,
-                model=args.model,
+                model=args.language_model,
                 prompt=args.prompt,
                 temperature=args.temperature,
                 output_file=args.output_file,
@@ -88,6 +87,6 @@ async def generate_samples_and_save(args: Namespace):
     for future in tqdm(
         asyncio.as_completed(tasks),
         total=len(tasks),
-        desc=f"{args.model}{f' - temp: {args.temperature}' if args.temperature else ''}",
+        desc=f"{args.language_model} - temp: {args.temperature}",
     ):
         await future
