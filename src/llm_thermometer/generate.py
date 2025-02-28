@@ -90,3 +90,5 @@ async def generate_samples_and_save(args: Namespace):
         desc=f"{args.language_model} - temp: {args.temperature}",
     ):
         await future
+
+    await client.close()
