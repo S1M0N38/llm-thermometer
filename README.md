@@ -27,21 +27,21 @@ export EMB_BASE_URL="https://api.provider.com/v1"
 
 # Generate samples
 llm-thermometer generate \
-  --model "model-name" \
+  --language-model "model-name" \
   --prompt "What will technology look like in 2050?" \
   --samples 32 \
+	--data-dir ./data \
   --temperature 0.7 \
-  --output-file data/samples.jsonl
 
 # Measure semantic similarity
 llm-thermometer measure \
-  --model "embedding-model-name" \
-  --input-file data/samples.jsonl \
-  --output-file data/samples.similarities.jsonl
+  --embedding-model "embedding-model-name" \
+	--data-dir ./data
 
 # Or use the Makefile
-make generate
-make measure
+make generate TEMPERATURE=0.7 # generate samples with temperature 0.7
+make generate # generate samples with range of temperatures
+make measure # measure similarities for all file in data directory
 ```
 
 ## Installation
