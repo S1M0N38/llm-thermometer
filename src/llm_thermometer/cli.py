@@ -5,7 +5,7 @@ import asyncio
 import sys
 from pathlib import Path
 
-from llm_thermometer import generate
+from llm_thermometer import generate, measure
 
 
 def main():
@@ -50,12 +50,35 @@ def main():
         help="Temperature to use",
     )
 
+    # Generate command
+    measure_parser = subparsers.add_parser(
+        "measure", help="Measure semantic similarity of samples"
+    )
+    measure_parser.add_argument(
+        "--model",
+        type=str,
+        required=True,
+        help="Embedding model for computing embeddings",
+    )
+    measure_parser.add_argument(
+        "--input-file",
+        type=Path,
+        required=True,
+        help="Input file path with samples (JSONL)",
+    )
+    measure_parser.add_argument(
+        "--output-file",
+        type=Path,
+        required=True,
+        help="Output file path with computed measures (JSONL)",
+    )
+
     args = parser.parse_args()
 
     if args.command == "generate":
         asyncio.run(generate.generate_samples_and_save(args))
     elif args.command == "measure":
-        raise NotImplementedError
+        asyncio.run(measure.calculate_similarities_and_save(args))
     else:
         parser.print_help()
         sys.exit(1)
