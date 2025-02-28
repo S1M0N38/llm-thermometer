@@ -30,13 +30,13 @@ llm-thermometer generate \
   --language-model "model-name" \
   --prompt "What will technology look like in 2050?" \
   --samples 32 \
-	--data-dir ./data \
+  --data-dir ./data \
   --temperature 0.7 \
 
 # Measure semantic similarity
 llm-thermometer measure \
   --embedding-model "embedding-model-name" \
-	--data-dir ./data
+  --data-dir ./data
 
 # Or use the Makefile
 make generate TEMPERATURE=0.7 # generate samples with temperature 0.7
