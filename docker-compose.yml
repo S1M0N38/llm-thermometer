@@ -1,0 +1,50 @@
+services:
+  language-model:
+    image: vllm/vllm-openai:latest
+    runtime: nvidia
+    volumes:
+      - "${HF_HOME}:/root/.cache/huggingface"
+    ports:
+      - "41408:8000"
+    environment:
+      - "HF_HOME=/root/.cache/huggingface"
+    command: >
+      --model unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit
+      --quantization bitsandbytes
+      --load-format bitsandbytes
+      --max-model-len 1024
+      --max-seq-len-to-capture 1024
+      --gpu-memory-utilization 0.7
+      --seed 42
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  embedding-model:
+    image: vllm/vllm-openai:latest
+    runtime: nvidia
+    volumes:
+      - "${HF_HOME}:/root/.cache/huggingface"
+    ports:
+      - "41409:8000"
+    environment:
+      - "HF_HOME=/root/.cache/huggingface"
+    command: >
+      --model intfloat/multilingual-e5-large
+      --gpu-memory-utilization 0.2
+      --seed 42
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  language-model:
+  embedding-model:
