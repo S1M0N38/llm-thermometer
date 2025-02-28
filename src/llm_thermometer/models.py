@@ -11,6 +11,14 @@ class Sample(BaseModel):
     temperature: float | None = None
 
 
+class Embedding(BaseModel):
+    """Model for LLM embeddings."""
+
+    model: str
+    sample_id: str
+    embedding: list[float]
+
+
 class Similarity(BaseModel):
     """Model for pairwise similarity between samples."""
 
