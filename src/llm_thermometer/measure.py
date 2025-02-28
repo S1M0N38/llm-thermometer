@@ -4,7 +4,6 @@ import logging
 import os
 from argparse import Namespace
 from itertools import combinations
-from typing import Callable
 
 from openai import AsyncOpenAI
 from tqdm import tqdm
@@ -71,28 +70,17 @@ async def generate_embeddings(
     return embeddings
 
 
-async def calculate_similarities(
-    embeddings: list[Embedding],
-    func: Callable[[Embedding, Embedding], Similarity] = cosine_similarity,
-) -> list[Similarity]:
-    embeddings_pairs = list(combinations(embeddings, 2))
-    similarities = [
-        func(emb1, emb2) for emb1, emb2 in tqdm(embeddings_pairs, desc="Similarities")
-    ]
-    return similarities
-
-
 async def calculate_similarities_and_save(args: Namespace):
-    assert args.input_file.exists(), "Input file must exist"
-    assert not args.output_file.exists(), "Output file must not exist"
-    assert args.output_file.suffix == ".jsonl", "Output file must be a JSONL file"
-
     with open(args.input_file, "r") as f:
         samples = [Sample.model_validate_json(line) for line in f]
         assert len(samples) > 1, "Need at least 2 samples to calculate similarities"
 
-    embeddings = await generate_embeddings(args.model, samples)
-    similarities = await calculate_similarities(embeddings, cosine_similarity)
+    embeddings = await generate_embeddings(args.embedding_model, samples)
+    embeddings_pairs = list(combinations(embeddings, 2))
+    similarities = [
+        cosine_similarity(emb1, emb2)
+        for emb1, emb2 in tqdm(embeddings_pairs, desc="Similarities")
+    ]
 
     with open(args.output_file, "w") as f:
         for similarity in similarities:
