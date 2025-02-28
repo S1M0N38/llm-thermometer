@@ -64,6 +64,7 @@ async def generate_embeddings(
             ]
         )
 
+    await client.close()
     assert len(embeddings) == len(samples), (
         "Number of embeddings does not match number of samples"
     )
