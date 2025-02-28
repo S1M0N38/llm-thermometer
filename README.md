@@ -1,4 +1,4 @@
-# LLM Thermometer
+# 🌡️ LLM Thermometer
 
 Estimate temperature values of Large Language Models (LLMs) through semantic similarity analysis of generated text.
 
