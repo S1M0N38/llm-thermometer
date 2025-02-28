@@ -1,3 +1,20 @@
+## v0.3.0 (2025-02-28)
+
+### Feat
+
+- **cli**: update cli for file creation based on session
+- **makefile**: update recipes to new CLI interface
+- **makefile**: add generate-all and measure-all recipes
+
+### Fix
+
+- **measure**: close httpx client
+- **generate**: close the httpx client
+
+### Refactor
+
+- **measure**: merge compute sim to compute and save sim
+
 ## v0.2.0 (2025-02-28)
 
 ### Feat
