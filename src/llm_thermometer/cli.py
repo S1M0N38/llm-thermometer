@@ -46,10 +46,15 @@ def cmd_report(args: Namespace):
     generate tables and plots. Save report in <data_dir>/reports"""
 
     (args.docs_dir / "reports").mkdir(exist_ok=True)
+
+    if args.index:
+        report.generate_index_and_save(args)
+        return
+
     for path in (args.data_dir / "similarities").glob("*.jsonl"):
         samples_file = path.parent.parent / "samples" / path.name
         similarities_file = path.parent.parent / "similarities" / path.name
-        output_file = args.docs_dir / "reports" / path.name
+        output_file = args.docs_dir / "reports" / path.with_suffix(".md").name
 
         if not output_file.exists():
             assert samples_file.exists() and similarities_file.exists()
@@ -139,6 +144,11 @@ def main():
         type=Path,
         required=True,
         help="Directory to save report",
+    )
+    report_parser.add_argument(
+        "--index",
+        action="store_true",
+        help="Generate index page instead of report",
     )
 
     args = parser.parse_args()
