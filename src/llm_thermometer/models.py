@@ -26,3 +26,12 @@ class Similarity(BaseModel):
     sample_id1: str
     sample_id2: str
     similarity: float
+
+
+class Experiment(BaseModel):
+    """Model for LLM experiment."""
+
+    id: str
+    language_model: str
+    embedding_model: str
+    prompt: str
