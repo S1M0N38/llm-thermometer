@@ -1,3 +1,9 @@
+## v0.3.1 (2025-03-01)
+
+### Fix
+
+- **measure**: compute embs pairs within the temp group
+
 ## v0.3.0 (2025-02-28)
 
 ### Feat
