@@ -24,24 +24,36 @@ export LLM_API_KEY="your_api_key"
 export LLM_BASE_URL="https://api.provider.com/v1"
 export EMB_API_KEY="your_embedding_api_key"
 export EMB_BASE_URL="https://api.provider.com/v1"
+```
 
+```bash
 # Generate samples
+
 llm-thermometer generate \
-  --language-model "model-name" \
-  --prompt "What will technology look like in 2050?" \
-  --samples 32 \
-  --data-dir ./data \
-  --temperature 0.7 \
+ --language-model "model-name" \
+ --prompt "What will technology look like in 2050?" \
+ --samples 32 \
+ --data-dir ./data \
+ --temperature 0.7 \
 
 # Measure semantic similarity
-llm-thermometer measure \
-  --embedding-model "embedding-model-name" \
-  --data-dir ./data
 
-# Or use the Makefile
+llm-thermometer measure \
+ --embedding-model "embedding-model-name" \
+ --data-dir ./data
+
+# Generate report
+
+llm-thermometer report \
+ --data-dir ./data \
+ --docs-dir ./docs
+
+# Or using Makefile...
+
 make generate TEMPERATURE=0.7 # generate samples with temperature 0.7
 make generate # generate samples with range of temperatures
 make measure # measure similarities for all file in data directory
+make report # generate report from data in data directory
 ```
 
 ## Installation
@@ -55,7 +67,7 @@ cd llm-thermometer
 pip install -e .
 ```
 
-## Local Deployment with Docker
+## Models Local Deployment with Docker
 
 If you have a GPU available, you can run both the Language Model and embedding model locally using docker-compose:
 
@@ -73,5 +85,5 @@ docker-compose up -d
 ## Requirements
 
 - Python 3.12+
-- OpenAI-compatible API endpoint
+- OpenAI-compatible API endpoints (`/chat/completions` and `/embeddings`)
 - NVIDIA GPU (for local deployment with docker-compose)
