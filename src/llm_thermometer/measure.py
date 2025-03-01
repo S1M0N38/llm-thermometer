@@ -3,8 +3,8 @@
 import logging
 import os
 from argparse import Namespace
-from itertools import combinations
 from collections import defaultdict
+from itertools import combinations
 
 from openai import AsyncOpenAI
 from tqdm import tqdm
