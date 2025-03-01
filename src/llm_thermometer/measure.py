@@ -4,6 +4,7 @@ import logging
 import os
 from argparse import Namespace
 from itertools import combinations
+from collections import defaultdict
 
 from openai import AsyncOpenAI
 from tqdm import tqdm
@@ -71,13 +72,32 @@ async def generate_embeddings(
     return embeddings
 
 
+def pair_embeddings(
+    samples: list[Sample], embeddings: list[Embedding]
+) -> list[tuple[Embedding, Embedding]]:
+    sample_id_to_temp = {sample.id: sample.temperature for sample in samples}
+
+    temp_to_embeddings = defaultdict(list)
+    for emb in embeddings:
+        temp_to_embeddings[sample_id_to_temp[emb.sample_id]].append(emb)
+
+    embeddings_pairs: list[tuple[Embedding, Embedding]] = []
+    for embs in temp_to_embeddings.values():
+        embeddings_pairs.extend(combinations(embs, 2))
+
+    assert len(embeddings_pairs) == sum(
+        len(v) * (len(v) - 1) // 2 for v in temp_to_embeddings.values()
+    )
+    return embeddings_pairs
+
+
 async def calculate_similarities_and_save(args: Namespace):
     with open(args.input_file, "r") as f:
         samples = [Sample.model_validate_json(line) for line in f]
         assert len(samples) > 1, "Need at least 2 samples to calculate similarities"
 
     embeddings = await generate_embeddings(args.embedding_model, samples)
-    embeddings_pairs = list(combinations(embeddings, 2))
+    embeddings_pairs = pair_embeddings(samples, embeddings)
     similarities = [
         cosine_similarity(emb1, emb2)
         for emb1, emb2 in tqdm(embeddings_pairs, desc="Similarities")
