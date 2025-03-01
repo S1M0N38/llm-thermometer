@@ -1,3 +1,19 @@
+## v0.4.0 (2025-03-01)
+
+### Feat
+
+- **report**: add index gen and utils function
+- **templates**: update preamble of the report template
+- **makefile**: add docs recipe for docs/index generation
+- **templates**: add index.md.jinja
+- **models**: add Experiment model
+- **cli**: add --index flag for docs generation
+- **templates**: replace html template with markdown template
+- **report**: add report module
+- **templates**: add empty report template
+- **cli**: add report subcommand
+- **makefile**: add report and all recipes
+
 ## v0.3.1 (2025-03-01)
 
 ### Fix
