@@ -4,7 +4,12 @@ version = "0.3.1"
 description = "Extimate temperature values of LLMs from generated text"
 readme = "README.md"
 requires-python = ">=3.12"
-dependencies = ["openai>=1.64.0", "pydantic>=2.10.6", "tqdm>=4.67.1"]
+dependencies = [
+  "jinja2>=3.1.5",
+  "openai>=1.64.0",
+  "pydantic>=2.10.6",
+  "tqdm>=4.67.1",
+]
 
 [project.scripts]
 llm-thermometer = "llm_thermometer.cli:main"
