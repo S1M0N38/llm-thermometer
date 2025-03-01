@@ -26,4 +26,10 @@ report:
 		--data-dir $(DATA_DIR) \
 		--docs-dir $(DOCS_DIR)
 
-.PHONY: all generate measure report
+docs:
+	@llm-thermometer report \
+		--data-dir $(DATA_DIR) \
+		--docs-dir $(DOCS_DIR) \
+		--index
+
+.PHONY: all generate measure report docs
