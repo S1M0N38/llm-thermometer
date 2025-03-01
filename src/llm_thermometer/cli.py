@@ -7,7 +7,7 @@ from argparse import Namespace
 from datetime import datetime
 from pathlib import Path
 
-from llm_thermometer import generate, measure
+from llm_thermometer import generate, measure, report
 
 TEMPERATURES = [0.0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]
 
@@ -39,6 +39,24 @@ def cmd_measure(args: Namespace):
             args.input_file = input_file
             args.output_file = output_file
             asyncio.run(measure.calculate_similarities_and_save(args))
+
+
+def cmd_report(args: Namespace):
+    """Use data in <data_dir>/similarities to compute statistics,
+    generate tables and plots. Save report in <data_dir>/reports"""
+
+    (args.docs_dir / "reports").mkdir(exist_ok=True)
+    for path in (args.data_dir / "similarities").glob("*.jsonl"):
+        samples_file = path.parent.parent / "samples" / path.name
+        similarities_file = path.parent.parent / "similarities" / path.name
+        output_file = args.docs_dir / "reports" / path.name
+
+        if not output_file.exists():
+            assert samples_file.exists() and similarities_file.exists()
+            args.samples_file = samples_file
+            args.similarities_file = similarities_file
+            args.output_file = output_file
+            report.generate_report_and_save(args)
 
 
 def main():
@@ -105,6 +123,24 @@ def main():
         help="Directory with samples to measure",
     )
 
+    # Report command
+    report_parser = subparsers.add_parser(
+        name="report",
+        help="Generate report from data in <data_dir>",
+    )
+    report_parser.add_argument(
+        "--data-dir",
+        type=Path,
+        required=True,
+        help="Directory with data to generate report from",
+    )
+    report_parser.add_argument(
+        "--docs-dir",
+        type=Path,
+        required=True,
+        help="Directory to save report",
+    )
+
     args = parser.parse_args()
 
     assert args.data_dir.is_dir() and args.data_dir.exists()
@@ -115,6 +151,9 @@ def main():
 
         case "measure":
             cmd_measure(args)
+
+        case "report":
+            cmd_report(args)
 
         case _:
             parser.print_help()
