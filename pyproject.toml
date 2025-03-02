@@ -35,3 +35,6 @@ annotated_tag = true
 gpg_sign = true
 major_version_zero = false
 version_provider = "pep621"
+
+[dependency-groups]
+dev = ["commitizen>=4.3.0", "pre-commit>=4.1.0", "ruff>=0.9.9"]
