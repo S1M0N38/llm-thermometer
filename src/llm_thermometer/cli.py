@@ -52,9 +52,11 @@ def cmd_report(args: Namespace):
         return
 
     for path in (args.data_dir / "similarities").glob("*.jsonl"):
-        samples_file = path.parent.parent / "samples" / path.name
-        similarities_file = path.parent.parent / "similarities" / path.name
-        output_file = args.docs_dir / "reports" / path.with_suffix(".md").name
+        exp_id = path.stem
+        samples_file = path.parent.parent / "samples" / f"{exp_id}.jsonl"
+        similarities_file = path.parent.parent / "similarities" / f"{exp_id}.jsonl"
+        output_file = args.docs_dir / "reports" / exp_id / f"{exp_id}.md"
+        output_file.parent.mkdir(exist_ok=True)
 
         if not output_file.exists():
             assert samples_file.exists() and similarities_file.exists()
