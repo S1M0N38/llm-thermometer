@@ -1,5 +1,9 @@
 # Contributing
 
+Welcome to the LLM Thermometer project! This tool helps estimate the temperature parameter of Large Language Models through semantic similarity analysis. We appreciate your interest in contributing to this project and are excited to see your ideas and improvements.
+
+This guide will help you set up your development environment, understand the project structure, and follow our contribution workflow. Whether you're fixing bugs, adding features, or improving documentation, this guide should have you covered.
+
 ## Environment Setup
 
 This section describes how to set up the **recommended** development environment for this project [uv](https://docs.astral.sh/uv/).
@@ -32,6 +36,53 @@ source .envrc
 ```
 
 > You can use [direnv](https://github.com/direnv/direnv) to automatically activate the environment when you enter the project directory.
+
+## Project Structure
+
+The LLM Thermometer project follows a structured organization to facilitate development and maintenance:
+
+```
+llm-thermometer/
+├── src/llm_thermometer/       # Main Python package
+│   ├── __init__.py            # Version information
+│   ├── cli.py                 # Command-line interface
+│   ├── generate.py            # LLM response generation
+│   ├── measure.py             # Semantic similarity measurement
+│   ├── models.py              # Pydantic data models
+│   ├── report.py              # Report generation
+│   └── templates/             # Jinja2 templates
+│       ├── index.md.jinja     # Index page template
+│       └── report.md.jinja    # Report template
+│
+├── docs/                      # Generated documentation
+│   ├── index.md               # Documentation index
+│   └── reports/               # Generated experiment reports
+│
+├── data/                      # Data directory (gitignored)
+│   ├── samples/               # Generated LLM samples
+│   └── similarities/          # Computed similarities
+│
+├── docker-compose.yml         # Docker configuration for local models
+├── Makefile                   # Automation for common tasks
+├── pyproject.toml             # Project metadata and dependencies
+├── README.md                  # Project overview
+├── CHANGELOG.md               # Version history
+└── .pre-commit-config.yaml    # Pre-commit hooks configuration
+```
+
+### Core Modules
+
+- **generate.py**: Handles the generation of LLM responses with different temperature values.
+- **measure.py**: Computes semantic similarities between generated responses using embedding models.
+- **report.py**: Processes the data and produces reports with visualizations and statistics.
+- **models.py**: Defines the data structures used throughout the project.
+- **cli.py**: Implements the command-line interface for the tool.
+
+### Data Flow
+
+1. **Generation**: `generate.py` produces samples from an LLM saved to `data/samples/`
+2. **Measurement**: `measure.py` computes similarities between samples saved to `data/similarities/`
+3. **Reporting**: `report.py` generates reports from the data saved to `docs/reports/`
 
 ## Project Style Guide
 
