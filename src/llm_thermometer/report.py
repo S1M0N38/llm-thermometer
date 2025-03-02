@@ -4,8 +4,11 @@ import logging
 from argparse import Namespace
 from pathlib import Path
 
+import matplotlib.pyplot as plt
 import pandas as pd
+import seaborn as sns
 from jinja2 import Environment, PackageLoader, select_autoescape
+from matplotlib.figure import Figure
 
 from llm_thermometer import __version__
 from llm_thermometer.models import Experiment, Sample, Similarity
@@ -18,6 +21,58 @@ env = Environment(
     loader=PackageLoader("llm_thermometer"),
     autoescape=select_autoescape(),
 )
+
+
+plt.rcParams.update(
+    {
+        "font.family": "sans-serif",
+        "font.sans-serif": ["Segoe UI", "Helvetica", "Arial", "sans-serif"],
+        "font.size": 11,
+        "axes.labelsize": 12,
+        "axes.titlesize": 14,
+        "xtick.labelsize": 10,
+        "ytick.labelsize": 10,
+        "axes.grid": True,
+        "grid.alpha": 0.5,
+        "grid.linestyle": ":",
+        "figure.dpi": 300,
+        "savefig.dpi": 300,
+    }
+)
+
+plt.style.use("seaborn-v0_8-whitegrid")
+
+
+def violinplot(df, figsize=(10, 5), ylim=(-0.2, 1.2), save_path=None) -> Figure:
+    fig, ax = plt.subplots(figsize=figsize)
+
+    sns.violinplot(
+        x="temperature",
+        y="similarity",
+        hue="temperature",
+        data=df,
+        palette="coolwarm",
+        legend=False,
+        inner="quartile",
+        ax=ax,
+    )
+
+    ax.set_ylim(ylim)
+    ax.set_xlabel("Temperature")
+    ax.set_ylabel("Similarity")
+    ax.grid(axis="y", linestyle=":", alpha=0.8)
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+
+    plt.tight_layout(pad=2)
+    if save_path is not None:
+        plt.savefig(save_path, bbox_inches="tight")
+
+    return fig
+
+
+def generate_plots_and_save(df: pd.DataFrame, save_dir: Path):
+    violinplot(df, save_path=save_dir / "violinplot.png")
 
 
 def files_to_experiment(samples_file: Path, similarities_file: Path) -> Experiment:
@@ -53,6 +108,12 @@ def generate_report_and_save(args: Namespace):
             [Similarity.model_validate_json(line).model_dump() for line in f],
         )
 
+    df = df_similarities.merge(
+        df_samples[["id", "temperature"]],
+        left_on="sample_id1",
+        right_on="id",
+    ).drop(columns=["id"])
+
     experiment = files_to_experiment(args.samples_file, args.similarities_file)
 
     template = env.get_template("report.md.jinja")
@@ -65,8 +126,10 @@ def generate_report_and_save(args: Namespace):
 
     with open(args.output_file, "w") as f:
         f.write(md_content)
+        logging.info(f"Report saved to {args.output_file}")
 
-    logging.info(f"Report saved to {args.output_file}")
+    generate_plots_and_save(df, args.docs_dir / "reports" / experiment.id)
+    logging.info(f"Plots saved to {args.docs_dir / 'reports' / experiment.id}")
 
 
 def generate_index_and_save(args):
