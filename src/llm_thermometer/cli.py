@@ -95,6 +95,12 @@ def main():
         help="Prompt to send to the LLM",
     )
     generate_parser.add_argument(
+        "--max_tokens",
+        type=int,
+        default=400,
+        help="Maximum number of tokens to generate",
+    )
+    generate_parser.add_argument(
         "--samples",
         type=int,
         default=32,
