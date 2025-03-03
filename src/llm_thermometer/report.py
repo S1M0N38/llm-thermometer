@@ -159,7 +159,7 @@ def scatterplot(df, figsize=(10, 5), save_path=None) -> Figure:
     )
 
     # Plot scatter points
-    for i, (temp, mean, std) in enumerate(
+    for i, (_, mean, std) in enumerate(
         zip(stats_df["temperature"], stats_df["mean"], stats_df["std"])
     ):
         ax.scatter(
