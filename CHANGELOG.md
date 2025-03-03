@@ -1,3 +1,30 @@
+## v0.5.0 (2025-03-03)
+
+### Feat
+
+- increase ctx window for language model
+- **templates**: add scatter plot avg/std to report tempalte
+- **models**: add samples to Experiment model
+- add exp_id to CLI for selecting specific report
+- add max-tokens to CLI
+- **report**: add scatter plot avg/std
+- **templates**: update report template with plots and stats
+- **report**: add basic plots and stats
+- **docs**: auto generate reports
+- **report**: add violin plot to report
+- **templates**: update templates to support new report format
+
+### Fix
+
+- **templates**: group reports by prompt
+- **report**: group reports by prompts in index
+- remove center div in markdown report
+- update link to reports in index.md
+- **docs**: auto generated docs with new dir structure
+- save images in docs/assets subdirs
+- **report**: update index generation to docs subdir structure
+- **tempaltes**: update footer link
+
 ## v0.4.0 (2025-03-01)
 
 ### Feat
