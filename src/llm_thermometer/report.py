@@ -2,6 +2,7 @@
 
 import logging
 from argparse import Namespace
+from collections import defaultdict
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -228,9 +229,17 @@ def generate_index_and_save(args):
         experiments, key=lambda e: (e.prompt, e.language_model, e.embedding_model, e.id)
     )
 
+    # group by prompt
+    prompt_to_experiments = defaultdict(list)
+    for exp in experiments:
+        prompt_to_experiments[exp.prompt].append(exp)
+
     template = env.get_template("index.md.jinja")
     output_file = args.docs_dir / "index.md"
-    md_content = template.render(experiments=experiments, version=__version__)
+    md_content = template.render(
+        prompt_to_experiments=prompt_to_experiments,
+        version=__version__,
+    )
 
     with open(output_file, "w") as f:
         f.write(md_content)
