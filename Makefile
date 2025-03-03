@@ -3,7 +3,7 @@ all: generate measure report
 LANGUAGE_MODEL := unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit
 EMBEDDING_MODEL := intfloat/multilingual-e5-large
 PROMPT := "What will technology look like in 2050?"
-SAMPLES := 32
+SAMPLES := 128
 MAX_TOKENS := 2048
 DATA_DIR := data
 DOCS_DIR := docs

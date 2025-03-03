@@ -12,8 +12,8 @@ services:
       --model unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit
       --quantization bitsandbytes
       --load-format bitsandbytes
-      --max-model-len 1024
-      --max-seq-len-to-capture 1024
+      --max-model-len 4096
+      --max-seq-len-to-capture 4096
       --gpu-memory-utilization 0.7
       --seed 42
     deploy:
