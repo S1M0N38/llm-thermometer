@@ -46,6 +46,7 @@ def cmd_report(args: Namespace):
     generate tables and plots. Save report in <data_dir>/reports"""
 
     (args.docs_dir / "reports").mkdir(exist_ok=True)
+    (args.docs_dir / "assets").mkdir(exist_ok=True)
 
     if args.index:
         report.generate_index_and_save(args)
@@ -55,8 +56,8 @@ def cmd_report(args: Namespace):
         exp_id = path.stem
         samples_file = path.parent.parent / "samples" / f"{exp_id}.jsonl"
         similarities_file = path.parent.parent / "similarities" / f"{exp_id}.jsonl"
-        output_file = args.docs_dir / "reports" / exp_id / f"{exp_id}.md"
-        output_file.parent.mkdir(exist_ok=True)
+        output_file = args.docs_dir / "reports" / f"{exp_id}.md"
+        (args.docs_dir / "assets" / exp_id).mkdir(exist_ok=True)
 
         if not output_file.exists():
             assert samples_file.exists() and similarities_file.exists()

@@ -128,7 +128,7 @@ def generate_report_and_save(args: Namespace):
         f.write(md_content)
         logging.info(f"Report saved to {args.output_file}")
 
-    generate_plots_and_save(df, args.docs_dir / "reports" / experiment.id)
+    generate_plots_and_save(df, args.docs_dir / "assets" / experiment.id)
     logging.info(f"Plots saved to {args.docs_dir / 'reports' / experiment.id}")
 
 
@@ -138,7 +138,7 @@ def generate_index_and_save(args):
             args.data_dir / "samples" / path.with_suffix(".jsonl").name,
             args.data_dir / "similarities" / path.with_suffix(".jsonl").name,
         )
-        for path in (args.docs_dir / "reports").rglob("*.md")
+        for path in (args.docs_dir / "reports").glob("*.md")
     ]
 
     # sort by prompt, langauge model, emebdding model and id
