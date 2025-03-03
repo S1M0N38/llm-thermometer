@@ -35,3 +35,4 @@ class Experiment(BaseModel):
     language_model: str
     embedding_model: str
     prompt: str
+    samples: int
