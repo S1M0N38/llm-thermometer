@@ -1,7 +1,7 @@
 all: generate measure report
 
 LANGUAGE_MODEL := unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit
-EMBEDDING_MODEL := jina-embeddings-v3
+EMBEDDING_MODEL := jinaai/jina-embeddings-v2-base-en
 PROMPT := "What will technology look like in 2050?"
 SAMPLES := 128
 MAX_TOKENS := 2048
