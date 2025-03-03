@@ -52,6 +52,15 @@ def cmd_report(args: Namespace):
         report.generate_index_and_save(args)
         return
 
+    if args.exp_id:
+        exp_id = args.exp_id
+        (args.docs_dir / "assets" / exp_id).mkdir(exist_ok=True)
+        args.samples_file = args.data_dir / "samples" / f"{exp_id}.jsonl"
+        args.similarities_file = args.data_dir / "similarities" / f"{exp_id}.jsonl"
+        args.output_file = args.docs_dir / "reports" / f"{exp_id}.md"
+        report.generate_report_and_save(args)
+        return
+
     for path in (args.data_dir / "similarities").glob("*.jsonl"):
         exp_id = path.stem
         samples_file = path.parent.parent / "samples" / f"{exp_id}.jsonl"
@@ -153,6 +162,12 @@ def main():
         type=Path,
         required=True,
         help="Directory to save report",
+    )
+    report_parser.add_argument(
+        "--exp-id",
+        type=str,
+        default="",
+        help="Experiment ID for which generate report",
     )
     report_parser.add_argument(
         "--index",

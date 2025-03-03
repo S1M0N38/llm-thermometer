@@ -8,6 +8,7 @@ MAX_TOKENS := 2048
 DATA_DIR := data
 DOCS_DIR := docs
 TEMPERATURE := ""
+EXP_ID := ""
 
 generate:
 	@llm-thermometer generate \
@@ -26,7 +27,8 @@ measure:
 report:
 	@llm-thermometer report \
 		--data-dir $(DATA_DIR) \
-		--docs-dir $(DOCS_DIR)
+		--docs-dir $(DOCS_DIR) \
+		--exp-id $(EXP_ID)
 
 docs:
 	@llm-thermometer report \
