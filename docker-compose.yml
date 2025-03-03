@@ -25,18 +25,16 @@ services:
               capabilities: [gpu]
 
   embedding-model:
-    image: vllm/vllm-openai:latest
+    image: ghcr.io/huggingface/text-embeddings-inference:1.6
     runtime: nvidia
     volumes:
       - "${HF_HOME}:/root/.cache/huggingface"
     ports:
-      - "41409:8000"
+      - "41409:80"
     environment:
       - "HF_HOME=/root/.cache/huggingface"
     command: >
-      --model intfloat/multilingual-e5-large
-      --gpu-memory-utilization 0.2
-      --seed 42
+      --model-id jinaai/jina-embeddings-v2-base-en
     deploy:
       resources:
         reservations:
