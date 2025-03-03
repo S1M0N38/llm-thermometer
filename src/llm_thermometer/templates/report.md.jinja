@@ -1,15 +1,35 @@
-## Experiment {{ experiment.id }}
+## Report
 
 ```
 {{ experiment.prompt }}
 ```
-
+- **Id:** `{{ experiment.id }}`
 - **Language Model:** `{{ experiment.language_model }}`
 - **Embedding Model:** `{{ experiment.embedding_model }}`
 
 ---
 
-![violinplot](../assets/{{ experiment.id }}/violinplot.png)
+![violinplot]({{ assets_paths.violinplot }})
+![ecdfplot]({{ assets_paths.ecdfplot }})
+
+---
+
+**Statistical Summary**
+
+<div align="center">
+
+  {{ stats.summary }}
+
+</div>
+
+**Linear Regression**
+
+<div align="center">
+
+  {{ stats.linear_regression }}
+
+</div>
+
 
 ---
 
