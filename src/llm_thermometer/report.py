@@ -82,7 +82,7 @@ def stats_linear_regression(df) -> str:
     return rf"$R^2 = {r_squared:.3f} \qquad y = {slope:.3f}x + {intercept:.3f} \qquad p = {p_value:.3e}$"
 
 
-def violinplot(df, figsize=(10, 5), ylim=(-0.2, 1.2), save_path=None) -> Figure:
+def violinplot(df, figsize=(10, 5), save_path=None) -> Figure:
     fig, ax = plt.subplots(figsize=figsize)
 
     sns.violinplot(
@@ -96,7 +96,6 @@ def violinplot(df, figsize=(10, 5), ylim=(-0.2, 1.2), save_path=None) -> Figure:
         ax=ax,
     )
 
-    ax.set_ylim(ylim)
     ax.set_xlabel("Temperature")
     ax.set_ylabel("Similarity")
     ax.grid(axis="y", linestyle=":", alpha=0.8)
