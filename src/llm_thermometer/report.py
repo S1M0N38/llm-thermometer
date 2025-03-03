@@ -145,9 +145,50 @@ def ecdfplot(df, figsize=(10, 5), ylim=(0, 1.05), save_path=None) -> Figure:
     return fig
 
 
+def scatterplot(df, figsize=(10, 5), save_path=None) -> Figure:
+    """Create a scatter plot of average similarity vs standard deviation for each temperature."""
+    fig, ax = plt.subplots(figsize=figsize)
+
+    # Get unique temperatures and create a colormap
+    temperatures = sorted(df["temperature"].unique())
+    colors = sns.color_palette("coolwarm", n_colors=len(temperatures))
+
+    # Compute statistics for each temperature
+    stats_df = (
+        df.groupby("temperature")["similarity"].agg(["mean", "std"]).reset_index()
+    )
+
+    # Plot scatter points
+    for i, (temp, mean, std) in enumerate(
+        zip(stats_df["temperature"], stats_df["mean"], stats_df["std"])
+    ):
+        ax.scatter(
+            mean,
+            std,
+            s=100,
+            color=colors[i],
+            edgecolor="white",
+            linewidth=0.5,
+            alpha=1,
+        )
+
+    ax.set_xlabel("Similarity (mean)")
+    ax.set_ylabel("Similarity (std)")
+    ax.grid(axis="both", linestyle=":", alpha=0.8)
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+
+    plt.tight_layout(pad=2)
+    if save_path is not None:
+        plt.savefig(save_path, bbox_inches="tight")
+
+    return fig
+
+
 def generate_assets_and_save(df: pd.DataFrame, save_dir: Path):
     violinplot(df, save_path=save_dir / "violinplot.png")
     ecdfplot(df, save_path=save_dir / "ecdfplot.png")
+    scatterplot(df, save_path=save_dir / "scatterplot.png")
 
 
 def files_to_experiment(samples_file: Path, similarities_file: Path) -> Experiment:
@@ -169,6 +210,7 @@ def files_to_experiment(samples_file: Path, similarities_file: Path) -> Experime
         language_model=sample.model,
         embedding_model=similarity.model,
         prompt=sample.prompt,
+        samples=len(samples),
     )
 
 
@@ -205,6 +247,7 @@ def generate_report_and_save(args: Namespace):
         assets_paths={
             "violinplot": f"../assets/{experiment.id}/violinplot.png",
             "ecdfplot": f"../assets/{experiment.id}/ecdfplot.png",
+            "scatterplot": f"../assets/{experiment.id}/scatterplot.png",
         },
         version=__version__,
     )
