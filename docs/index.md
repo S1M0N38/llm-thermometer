@@ -10,8 +10,8 @@ What will technology look like in 2050?
 
 | Id | Language Model | Embedding Model | # samples |
 |:---:|:---|:---|---:|
-| [20250228T195628](reports/20250228T195628.md) | unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit | intfloat/multilingual-e5-large | 352 |
 | [20250303T144808](reports/20250303T144808.md) | unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit | jina-embeddings-v3 | 1408 |
+| [20250303T193518](reports/20250303T193518.md) | unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit | jinaai/jina-embeddings-v2-base-en | 352 |
 
 
 ## About LLM Thermometer
