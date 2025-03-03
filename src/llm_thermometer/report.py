@@ -9,6 +9,7 @@ import pandas as pd
 import seaborn as sns
 from jinja2 import Environment, PackageLoader, select_autoescape
 from matplotlib.figure import Figure
+from scipy import stats
 
 from llm_thermometer import __version__
 from llm_thermometer.models import Experiment, Sample, Similarity
@@ -43,6 +44,43 @@ plt.rcParams.update(
 plt.style.use("seaborn-v0_8-whitegrid")
 
 
+def stats_summary(df) -> str:
+    # Group by temperature and calculate summary statistics
+    summary: pd.DataFrame = (
+        df.groupby("temperature")["similarity"]
+        .agg(
+            [
+                ("Mean", "mean"),
+                ("Median", "median"),
+                ("Std Dev", "std"),
+                ("Min", "min"),
+                ("25%", lambda x: x.quantile(0.25)),
+                ("75%", lambda x: x.quantile(0.75)),
+                ("Max", "max"),
+                ("Count", "count"),
+            ]
+        )
+        .reset_index()
+    )
+
+    # Round numeric values for display
+    numeric_cols = summary.columns.difference(["temperature", "Count"])
+    summary[numeric_cols] = summary[numeric_cols].round(4)
+    markdown_table = summary.to_markdown(index=False, tablefmt="pipe")
+    assert isinstance(markdown_table, str), "Expected markdown_table to be a string"
+
+    return markdown_table
+
+
+def stats_linear_regression(df) -> str:
+    slope, intercept, r_value, p_value, _ = stats.linregress(
+        df["temperature"], df["similarity"]
+    )
+    r_squared = r_value**2  # type: ignore
+
+    return rf"$R^2 = {r_squared:.3f} \qquad y = {slope:.3f}x + {intercept:.3f} \qquad p = {p_value:.3e}$"
+
+
 def violinplot(df, figsize=(10, 5), ylim=(-0.2, 1.2), save_path=None) -> Figure:
     fig, ax = plt.subplots(figsize=figsize)
 
@@ -71,8 +109,45 @@ def violinplot(df, figsize=(10, 5), ylim=(-0.2, 1.2), save_path=None) -> Figure:
     return fig
 
 
-def generate_plots_and_save(df: pd.DataFrame, save_dir: Path):
+def ecdfplot(df, figsize=(10, 5), ylim=(0, 1.05), save_path=None) -> Figure:
+    """Create an Empirical Cumulative Distribution Function plot for similarities by temperature."""
+    fig, ax = plt.subplots(figsize=figsize)
+
+    # Get unique temperatures and create a colormap
+    temperatures = sorted(df["temperature"].unique())
+    colors = sns.color_palette("coolwarm", n_colors=len(temperatures))
+
+    # Plot ECDF for each temperature
+    for temp, color in zip(temperatures, colors):
+        subset = df[df["temperature"] == temp]
+
+        # Plot the ECDF using seaborn
+        sns.ecdfplot(
+            data=subset,
+            x="similarity",
+            ax=ax,
+            label=f"T={temp}",
+            color=color,
+            linewidth=2,
+        )
+
+    ax.set_ylim(ylim)
+    ax.set_xlabel("Similarity")
+    ax.set_ylabel("Cumulative Probability")
+    ax.grid(axis="both", linestyle=":", alpha=0.8)
+    ax.spines["right"].set_visible(False)
+    ax.spines["top"].set_visible(False)
+
+    plt.tight_layout(pad=2)
+    if save_path is not None:
+        plt.savefig(save_path, bbox_inches="tight")
+
+    return fig
+
+
+def generate_assets_and_save(df: pd.DataFrame, save_dir: Path):
     violinplot(df, save_path=save_dir / "violinplot.png")
+    ecdfplot(df, save_path=save_dir / "ecdfplot.png")
 
 
 def files_to_experiment(samples_file: Path, similarities_file: Path) -> Experiment:
@@ -116,20 +191,27 @@ def generate_report_and_save(args: Namespace):
 
     experiment = files_to_experiment(args.samples_file, args.similarities_file)
 
+    assets_dir = args.docs_dir / "assets" / experiment.id
+    generate_assets_and_save(df, assets_dir)
+    logging.info(f"Assets saved to {assets_dir}")
+
     template = env.get_template("report.md.jinja")
     md_content = template.render(
         experiment=experiment,
+        stats={
+            "summary": stats_summary(df),
+            "linear_regression": stats_linear_regression(df),
+        },
+        assets_paths={
+            "violinplot": f"../assets/{experiment.id}/violinplot.png",
+            "ecdfplot": f"../assets/{experiment.id}/ecdfplot.png",
+        },
         version=__version__,
-        tables={},
-        plots={},
     )
 
     with open(args.output_file, "w") as f:
         f.write(md_content)
         logging.info(f"Report saved to {args.output_file}")
-
-    generate_plots_and_save(df, args.docs_dir / "assets" / experiment.id)
-    logging.info(f"Plots saved to {args.docs_dir / 'reports' / experiment.id}")
 
 
 def generate_index_and_save(args):
