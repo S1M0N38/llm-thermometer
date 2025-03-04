@@ -8,7 +8,7 @@
       <img alt="Status" src="https://img.shields.io/badge/Status-WIP-yellow?style=for-the-badge"/>
     </a>
     <a href="https://github.com/S1M0N38/llm-thermometer/tags">
-      <img alt="Tag" src="https://img.shields.io/github/v/tag/S1M0N38/llm-thermometer?style=for-the-badge"/>
+      <img alt="Tag" src="https://img.shields.io/github/v/tag/S1M0N38/llm-thermometer?style=for-the-badge&color=blue"/>
     </a>
   </p>
   <p>
