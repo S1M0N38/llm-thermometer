@@ -90,7 +90,7 @@ async def generate_samples_and_save(args: Namespace):
     for future in tqdm(
         asyncio.as_completed(tasks),
         total=len(tasks),
-        desc=f"{args.language_model} - temp: {args.temperature}",
+        desc=f"temp: {args.temperature}",
     ):
         await future
 
