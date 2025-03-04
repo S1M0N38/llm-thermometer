@@ -2,8 +2,7 @@
   <h1>🌡️&nbsp;LLM Thermometer </h1>
   <p align="center">
     <a href="https://s1m0n38.github.io/llm-thermometer/">
-      <img alt="Docs" src="https://img.shields.io/github/actions/workflow/status/S1M0N38/llm-thermometer/jekyll-gh-pages.yml?style=for-the-badge&label=Docs
-"/>
+      <img alt="Docs" src="https://img.shields.io/github/actions/workflow/status/S1M0N38/llm-thermometer/jekyll-gh-pages.yml?style=for-the-badge&label=Docs"/>
     </a>
     <a href="https://github.com/S1M0N38/llm-thermometer">
       <img alt="Status" src="https://img.shields.io/badge/Status-WIP-yellow?style=for-the-badge"/>
