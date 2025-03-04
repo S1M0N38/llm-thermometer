@@ -1,10 +1,33 @@
-# 🌡️ LLM Thermometer
-
-Estimate temperature values of Large Language Models (LLMs) through semantic similarity analysis of generated text.
+<div align="center">
+  <h1>🌡️&nbsp;LLM Thermometer </h1>
+  <p align="center">
+    <a href="https://s1m0n38.github.io/llm-thermometer/">
+      <img alt="Docs" src="https://img.shields.io/github/actions/workflow/status/S1M0N38/llm-thermometer/jekyll-gh-pages.yml?style=for-the-badge&label=Docs
+"/>
+    </a>
+    <a href="https://github.com/S1M0N38/llm-thermometer">
+      <img alt="Status" src="https://img.shields.io/badge/Status-WIP-yellow?style=for-the-badge"/>
+    </a>
+    <a href="https://github.com/S1M0N38/llm-thermometer/tags">
+      <img alt="Tag" src="https://img.shields.io/github/v/tag/S1M0N38/llm-thermometer?style=for-the-badge"/>
+    </a>
+  </p>
+  <p>
+    <em>Estimate temperature values of Large Language Models from semantic similarity of generated text</em>
+  </p>
+  <hr>
+</div>
 
 ## Research Question
 
-Is it possible to infer the temperature parameter value used by an LLM from only the generated text? Probably [yes](https://s1m0n38.github.io/llm-thermometer/reports/20250303T144808.html).
+Is it possible to infer the temperature parameter value used by an LLM from only the generated text?
+
+> Probably [yes](https://s1m0n38.github.io/llm-thermometer/reports/20250303T144808.html).
+>
+> ![Example Plot](https://media.githubusercontent.com/media/S1M0N38/llm-thermometer/refs/heads/main/docs/assets/20250303T204220/ecdfplot.png)
+>
+> _Similarity between generated texts with same temperature level (various colors) from the prompt: \
+> "What will technology look like in 2050?"_
 
 ## Approach
 
