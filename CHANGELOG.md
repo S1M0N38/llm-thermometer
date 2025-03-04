@@ -1,3 +1,9 @@
+## v0.5.2 (2025-03-04)
+
+### Fix
+
+- **templates**: remove linear regression from reports
+
 ## v0.5.1 (2025-03-04)
 
 ### Fix

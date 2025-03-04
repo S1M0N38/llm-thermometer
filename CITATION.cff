@@ -6,7 +6,7 @@ authors:
   - family-names: "Bertolotto"
     given-names: "Simone"
     alias: "S1M0N38"
-version: 0.5.1
+version: 0.5.2
 date-released: 2025-03-04
 license: MIT
 repository-code: "https://github.com/S1M0N38/llm-thermometer"
