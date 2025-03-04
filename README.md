@@ -112,3 +112,9 @@ docker-compose up -d
 - Python 3.12+
 - OpenAI-compatible API endpoints (`/chat/completions` and `/embeddings`)
 - NVIDIA GPU (for local deployment with docker-compose)
+
+## Contributing
+
+This research project is still in its early stages, and I welcome any feedback, suggestions, and contributions! If you're interested in discussing ideas or have questions about the approach, please start a conversation in [GitHub Discussions](https://github.com/S1M0N38/llm-thermometer/discussions).
+
+For detailed information on setting up your development environment, understanding the project structure, and the contribution workflow, please refer to [CONTRIBUTING.md](CONTRIBUTING.md).

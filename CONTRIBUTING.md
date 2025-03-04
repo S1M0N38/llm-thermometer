@@ -56,18 +56,28 @@ llm-thermometer/
 │
 ├── docs/                      # Generated documentation
 │   ├── index.md               # Documentation index
-│   └── reports/               # Generated experiment reports
+│   ├── reports/               # Generated experiment reports
+│   └── assets/                # Report visualizations and images
+│       └── [experiment_id]/   # Assets organized by experiment ID
 │
 ├── data/                      # Data directory (gitignored)
 │   ├── samples/               # Generated LLM samples
 │   └── similarities/          # Computed similarities
+│
+├── .github/                   # GitHub configuration
+│   └── workflows/             # GitHub Actions workflows
 │
 ├── docker-compose.yml         # Docker configuration for local models
 ├── Makefile                   # Automation for common tasks
 ├── pyproject.toml             # Project metadata and dependencies
 ├── README.md                  # Project overview
 ├── CHANGELOG.md               # Version history
-└── .pre-commit-config.yaml    # Pre-commit hooks configuration
+├── CITATION.cff               # Citation information
+├── CONTRIBUTING.md            # Contribution guidelines
+├── .pre-commit-config.yaml    # Pre-commit hooks configuration
+├── .gitignore                 # Git ignore patterns
+├── .gitattributes             # Git attributes (LFS configuration)
+└── .python-version            # Python version specifier
 ```
 
 ### Core Modules
@@ -96,7 +106,7 @@ pre-commit install --hook-type pre-commit --hook-type commit-msg --hook-type pre
 
 The following hooks are used:
 
-- **[conventional-commits](https://www.conventionalcommits.org/en/v1.0.0/):** for consistent commit messages.
+- [conventional-commits](https://www.conventionalcommits.org/en/v1.0.0/): for consistent commit messages.
 - [ruff](https://docs.astral.sh/ruff/) for linting and formatting.
 - [uv](https://docs.astral.sh/uv/) for managing environment and dependencies.
 
