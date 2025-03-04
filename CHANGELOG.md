@@ -1,3 +1,9 @@
+## v0.5.1 (2025-03-04)
+
+### Fix
+
+- **templates**: add new lines after report tables
+
 ## v0.5.0 (2025-03-03)
 
 ### Feat
