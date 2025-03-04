@@ -11,6 +11,10 @@ TEMPERATURE := ""
 EXP_ID := ""
 
 generate:
+	@echo "Generating samples..."
+	@echo "Prompt: $(PROMPT)"
+	@echo "Language Model: $(LANGUAGE_MODEL)"
+	@echo "Samples: $(SAMPLES)"
 	@llm-thermometer generate \
 		--language-model $(LANGUAGE_MODEL) \
 		--prompt $(PROMPT) \
