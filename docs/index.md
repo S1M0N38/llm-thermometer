@@ -10,8 +10,26 @@ What will technology look like in 2050?
 
 | Id | Language Model | Embedding Model | # samples |
 |:---:|:---|:---|---:|
+| [20250304T080143](reports/20250304T080143.md) | unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit | jinaai/jina-embeddings-v2-base-en | 1408 |
 | [20250303T144808](reports/20250303T144808.md) | unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit | jina-embeddings-v3 | 1408 |
 | [20250303T193518](reports/20250303T193518.md) | unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit | jinaai/jina-embeddings-v2-base-en | 352 |
+| [20250303T204220](reports/20250303T204220.md) | unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit | jinaai/jina-embeddings-v2-base-en | 2816 |
+---
+```
+What's the meaning of life?
+```
+
+| Id | Language Model | Embedding Model | # samples |
+|:---:|:---|:---|---:|
+| [20250304T003734](reports/20250304T003734.md) | unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit | jinaai/jina-embeddings-v2-base-en | 352 |
+---
+```
+Write a creative story with six paragraphs.
+```
+
+| Id | Language Model | Embedding Model | # samples |
+|:---:|:---|:---|---:|
+| [20250304T000411](reports/20250304T000411.md) | unsloth/Mistral-Small-24B-Instruct-2501-bnb-4bit | jinaai/jina-embeddings-v2-base-en | 352 |
 
 
 ## About LLM Thermometer
