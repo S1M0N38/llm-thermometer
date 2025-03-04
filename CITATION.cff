@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below. Note: This is a work in progress."
+title: "LLM Thermometer: Estimating Temperature Values of Large Language Models"
+abstract: "A tool to estimate temperature parameter values of Large Language Models through semantic similarity analysis of generated text."
+authors:
+  - family-names: "Bertolotto"
+    given-names: "Simone"
+    alias: "S1M0N38"
+version: 0.5.1
+date-released: 2025-03-04
+license: MIT
+repository-code: "https://github.com/S1M0N38/llm-thermometer"
+url: "https://s1m0n38.github.io/llm-thermometer/"
+keywords:
+  - large-language-models
+  - temperature
+  - semantic-similarity
+  - natural-language-processing
+  - embeddings
+  - llm-evaluation
+  - nlp
+preferred-citation:
+  type: software
+  authors:
+    - family-names: "Bertolotto"
+      given-names: "Simone"
+  title: "LLM Thermometer: Estimating Temperature Values of Large Language Models"
+  year: 2025
+  url: "https://github.com/S1M0N38/llm-thermometer"
+  repository-code: "https://github.com/S1M0N38/llm-thermometer"
