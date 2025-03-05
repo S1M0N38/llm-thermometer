@@ -1,6 +1,9 @@
 ## Report
 
-```
+{% if comment %}{{ comment }}
+---
+
+{% endif %}```
 {{ experiment.prompt }}
 ```
 - **Id:** `{{ experiment.id }}`

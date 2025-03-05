@@ -237,9 +237,15 @@ def generate_report_and_save(args: Namespace):
     generate_assets_and_save(df, assets_dir)
     logging.info(f"Assets saved to {assets_dir}")
 
+    comment: str | None = None
+    comment_file = args.data_dir / "comments" / f"{experiment.id}.md"
+    if comment_file.exists():
+        comment = comment_file.read_text()
+
     template = env.get_template("report.md.jinja")
     md_content = template.render(
         experiment=experiment,
+        comment=comment,
         stats={
             "summary": stats_summary(df),
             "linear_regression": stats_linear_regression(df),
